@@ -34,40 +34,55 @@ fun SelectScreen(url: Int, mainActivity: MainActivity) {
 
     val viewModel = DIContainer.resolveDependency(ImagesViewModel::class.java) //viewModel<ImagesViewModel>()
 
-    val images = remember { viewModel.images}
+    val images = viewModel.images
+
 
     val h = LocalConfiguration.current.screenHeightDp.dp.value.toInt()
     val w = LocalConfiguration.current.screenWidthDp.dp.value.toInt()
 
     Box() {
-    AsyncImage(// it is too difficult to load image without libs
-        model = images.get(url).raw,
-        contentDescription = "Translated description of what the image contains",
-        modifier = Modifier.fillMaxSize(),
-        contentScale = ContentScale.Crop
-    )
+        if (images.size > url) {
+            AsyncImage(// it is too difficult to load image without libs
+                model = images.get(url).raw,
+                contentDescription = "Translated description of what the image contains",
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
 
-        Row(
-            modifier = Modifier.fillMaxSize(),
-            verticalAlignment = Alignment.Bottom
-        ) {
-            Button(onClick = {
+            Row(
+                modifier = Modifier.fillMaxSize(),
+                verticalAlignment = Alignment.Bottom
+            ) {
+                Button(onClick = {
 
-                viewModel.setWallpaper(mainActivity, images.get(url).raw, WallpaperManager.FLAG_SYSTEM,w,h)
+                    viewModel.setWallpaper(
+                        mainActivity,
+                        images.get(url).raw,
+                        WallpaperManager.FLAG_SYSTEM,
+                        w,
+                        h
+                    )
 
-            }) {
-                Text(text = "setup wallpaper")
+                }) {
+                    Text(text = "setup wallpaper")
+                }
             }
-        }
-        Row(
-            modifier = Modifier.fillMaxSize(),
-            verticalAlignment = Alignment.Bottom,
-            horizontalArrangement = Arrangement.End
-        ) {
-            Button(onClick = {
-                viewModel.setWallpaper(mainActivity, images.get(url).raw, WallpaperManager.FLAG_LOCK,w,h)
-            }) {
-                Text(text = "setup lockscreen")
+            Row(
+                modifier = Modifier.fillMaxSize(),
+                verticalAlignment = Alignment.Bottom,
+                horizontalArrangement = Arrangement.End
+            ) {
+                Button(onClick = {
+                    viewModel.setWallpaper(
+                        mainActivity,
+                        images.get(url).raw,
+                        WallpaperManager.FLAG_LOCK,
+                        w,
+                        h
+                    )
+                }) {
+                    Text(text = "setup lockscreen")
+                }
             }
         }
     }

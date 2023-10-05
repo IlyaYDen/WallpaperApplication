@@ -4,8 +4,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ilyaden.wallpaperapplication.domain.UseCases.GetImageUseCase
-import com.ilyaden.wallpaperapplication.domain.UseCases.GetImagesUseCase
-import com.ilyaden.wallpaperapplication.tools.Link
+import com.ilyaden.wallpaperapplication.data.Link
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

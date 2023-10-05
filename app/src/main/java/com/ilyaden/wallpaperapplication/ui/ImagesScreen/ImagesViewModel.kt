@@ -13,11 +13,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.ilyaden.wallpaperapplication.domain.UseCases.GetImagesUseCase
-import com.ilyaden.wallpaperapplication.tools.Link
+import com.ilyaden.wallpaperapplication.data.Link
 import com.ilyaden.wallpaperapplication.ui.MainActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.lang.Double.min
 import java.net.URL
 
 
@@ -28,14 +27,21 @@ class ImagesViewModel(
     private val _images = mutableStateListOf<Link>()
     val images = _images
 
+    var page = 1
+
     fun getImagesEvent(name :String) {
 
         viewModelScope.launch(Dispatchers.IO) {
-            _images.addAll(getImagesUseCase(name))
+            _images.addAll(getImagesUseCase(name,page))
         }
+        page++;
     }
 
 
+    fun clear() {
+        images.clear()
+        page = 1
+    }
 
     fun setWallpaper(mainActivity: MainActivity, lnk: String, wallpaperFlag: Int, width: Int, height :Int) {
         viewModelScope.launch(Dispatchers.IO) {

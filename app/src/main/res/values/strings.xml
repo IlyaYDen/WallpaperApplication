@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">wallpaperApplication</string>
+    <string name="wallpaperApplication">Wallpaper Application</string>
+    <string name="DarkTheme">Dark Theme</string>
 </resources>

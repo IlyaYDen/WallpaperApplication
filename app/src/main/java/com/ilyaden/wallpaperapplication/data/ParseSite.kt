@@ -1,7 +1,7 @@
-package com.ilyaden.wallpaperapplication.tools
+package com.ilyaden.wallpaperapplication.data
 
 import android.os.AsyncTask
-import okhttp3.internal.wait
+import com.ilyaden.wallpaperapplication.Config
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.BufferedReader
@@ -67,12 +67,12 @@ object ParseSite {
 
 
 
-     fun parse(name: String, num:Int = 10): ArrayList<Link> {
+     fun parse(name: String, num:Int = 10, page:Int = 1): List<Link> {
         return try {
 
 
             val inputStream =
-                URL("https://api.unsplash.com/search/photos/?client_id=ZH6rJjfSIaEWlPIn7HFyZNf0ZsrTU5y8ansGR5235MM&query=$name&orientation=portrait&per_page=$num")
+                URL("https://api.unsplash.com/search/photos/?client_id=${Config.clientID}&query=$name&orientation=portrait&per_page=$num&page=$page")
             var connection: HttpURLConnection? = null
             var rd: BufferedReader? = null
             connection = inputStream.openConnection() as HttpURLConnection
@@ -105,8 +105,11 @@ object ParseSite {
 
                     if (inexlink[0] == "raw") {
                         oneLink.raw = inexlink[1]
+
+                        println("raw" + inexlink[1])
                     } else if (inexlink[0] == "full") {
                         oneLink.full = inexlink[1]
+                        println("full" + inexlink[1])
                     } else {
                         break
                     }
@@ -115,7 +118,7 @@ object ParseSite {
             }
 
             //OK
-            linksList
+            linksList.distinct()
         } catch (e: MalformedURLException) {
             throw RuntimeException(e)
         } catch (e: IOException) {
@@ -126,8 +129,26 @@ object ParseSite {
 
 
 }
+
 class Link: Serializable {
     var raw: String = ""
     var full: String = ""
-}
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
 
+        other as Link
+
+        if (raw != other.raw) return false
+        if (full != other.full) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = raw.hashCode()
+        result = 31 * result + full.hashCode()
+        return result
+    }
+
+}

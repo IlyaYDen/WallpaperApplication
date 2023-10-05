@@ -24,7 +24,9 @@ fun CategoriesScreen(navController: NavHostController) {
 
     LaunchedEffect(vm) {
 
-        vm.getImageEvent(groups.toList())
+        if(vm.images.isEmpty())
+            vm.getImageEvent(groups.toList())
+
     }
     val images = remember { vm.images }
 

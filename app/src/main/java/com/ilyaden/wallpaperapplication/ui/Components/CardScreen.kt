@@ -1,6 +1,5 @@
 package com.ilyaden.wallpaperapplication.ui.Components
 
-import android.os.Bundle
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -12,18 +11,13 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.ilyaden.wallpaperapplication.R
-import com.ilyaden.wallpaperapplication.tools.Link
-import com.ilyaden.wallpaperapplication.ui.Screen
-import java.net.URL
 
 @Preview
 @Composable
