@@ -70,7 +70,6 @@ object ParseSite {
      fun parse(name: String, num:Int = 10, page:Int = 1): List<Link> {
         return try {
 
-
             val inputStream =
                 URL("https://api.unsplash.com/search/photos/?client_id=${Config.clientID}&query=$name&orientation=portrait&per_page=$num&page=$page")
             var connection: HttpURLConnection? = null
